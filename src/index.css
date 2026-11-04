@@ -1,18 +1,24 @@
 /* Shared styling for navigation, layouts, and placeholder pages. */
 :root {
-  font-family: Arial, sans-serif;
-  color: #28322e;
-  background: #f6f4ef;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --ink: #28322e;
-  --muted: #737d75;
-  --paper: #fbfaf7;
-  --line: #dddcd2;
-  --olive: #56634d;
-  --rust: #a9583e;
-}
 
+  --font-heading: Georgia, serif;
+  --font-body: Arial, sans-serif;
+
+  --page: #fcf3e7;   /* cream: page background */
+  --paper: #fcf3e7;  /* light cream: cards, header, forms */
+  --ink: #0d3d3a;    /* deep teal: main text */
+  --muted: #45605d;  /* softer teal-grey text */
+  --line: #45605d;   /* borders */
+
+  /* The names below are kept so the rest of the CSS needs no change. */
+  --olive: #0d3d3a;  /* PRIMARY: buttons, links, focus outlines (teal) */
+  --rust: #6c171e;   /* ACCENT: hover, prices, errors, sold-out (burgundy) */
+}
 * { box-sizing: border-box; }
 body { margin: 0; min-width: 320px; min-height: 100vh; }
 button, a { font: inherit; }
@@ -31,14 +37,14 @@ button { cursor: pointer; }
   background: var(--paper);
   border-bottom: 1px solid var(--line);
 }
-.brand { font-family: Georgia, serif; font-size: 22px; letter-spacing: -.04em; white-space: nowrap; }
-.brand span { color: var(--muted); font-family: Arial, sans-serif; font-size: 13px; letter-spacing: 0; }
+.brand { font-family: var(--font-heading); font-size: 22px; letter-spacing: -.04em; white-space: nowrap; }
+.brand span { color: var(--muted); font-family: var(--font-body); font-size: 13px; letter-spacing: 0; }
 .main-nav, .admin-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; font-size: 14px; color: #525d56; }
 .nav-action { border: 0; background: none; color: inherit; padding: 0; }
 .page-main { width: min(100% - 40px, 1120px); flex: 1; margin: 0 auto; padding: clamp(64px, 12vh, 132px) 0; }
 .page-title { min-height: 240px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
-.page-title h1 { margin: 8px 0; font: 400 clamp(46px, 8vw, 78px)/1.05 Georgia, serif; letter-spacing: -.055em; }
-.site-footer { display: flex; justify-content: space-between; gap: 16px; padding: 22px clamp(20px, 6vw, 88px); border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+.page-title h1 { margin: 8px 0; font: 400 clamp(46px, 8vw, 78px)/1.05 var(--font-heading); letter-spacing: -.055em; }
+.site-footer { display: flex; justify-content: space-between; gap: 16px; padding: 22px clamp(20px, 6vw, 88px); border-bottom: 1px solid var(--line); color: var(--muted); font-size: 12px; }
 .admin-shell { background: #f0f1eb; }
 .admin-header { align-items: flex-start; flex-direction: column; padding-top: 24px; padding-bottom: 20px; }
 .admin-nav { gap: 24px; }
@@ -58,7 +64,7 @@ button { cursor: pointer; }
 /* Customer menu: controlled filters, responsive cards, and availability states. */
 .menu-heading h1 {
   margin: 0 0 28px;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .menu-filters {
@@ -168,7 +174,7 @@ button { cursor: pointer; }
 
 .menu-card h2 {
   margin: 0;
-  font: 400 25px Georgia, serif;
+  font: 400 25px var(--font-heading);
 }
 
 .menu-card p {
@@ -261,7 +267,7 @@ button { cursor: pointer; }
     /* Shopping cart: list rows, quantity controls, summary, and empty state. */
 .cart-heading h1 {
   margin: 0 0 28px;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .cart-layout {
@@ -298,7 +304,7 @@ button { cursor: pointer; }
 
 .cart-row-info h2 {
   margin: 0 0 4px;
-  font: 400 20px Georgia, serif;
+  font: 400 20px var(--font-heading);
 }
 
 .cart-unit-price {
@@ -355,7 +361,7 @@ button { cursor: pointer; }
 
 .cart-summary h2 {
   margin: 0;
-  font: 400 24px Georgia, serif;
+  font: 400 24px var(--font-heading);
 }
 
 .cart-summary-line {
@@ -446,7 +452,7 @@ button { cursor: pointer; }
 .checkout-heading h1,
 .orders-heading h1 {
   margin: 0 0 28px;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .checkout-layout {
@@ -615,7 +621,7 @@ button { cursor: pointer; }
 
 .order-card h2 {
   margin: 0;
-  font: 400 24px Georgia, serif;
+  font: 400 24px var(--font-heading);
 }
 
 .order-status {
@@ -680,7 +686,7 @@ button { cursor: pointer; }
 /* Reservations: booking form layout, date/time/number/select fields, history list. */
 .reservations-heading h1 {
   margin: 0 0 28px;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .reservation-form {
@@ -718,7 +724,7 @@ button { cursor: pointer; }
 
 .reservations-history h2 {
   margin: 0 0 16px;
-  font: 400 28px Georgia, serif;
+  font: 400 28px var(--font-heading);
 }
 
 @media (max-width: 600px) {
@@ -730,7 +736,7 @@ button { cursor: pointer; }
 /* Chat: message list, bubbles, suggested questions, and input form. */
 .chat-heading h1 {
   margin: 0 0 28px;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .chat-window {
@@ -881,7 +887,7 @@ button { cursor: pointer; }
 
 .admin-heading h1 {
   margin: 0;
-  font: 400 46px Georgia, serif;
+  font: 400 46px var(--font-heading);
 }
 
 .admin-primary-button {
@@ -924,7 +930,7 @@ button { cursor: pointer; }
 
 .menu-form h2 {
   margin: 0;
-  font: 400 24px Georgia, serif;
+  font: 400 24px var(--font-heading);
 }
 
 .admin-table-wrap {
@@ -1106,7 +1112,7 @@ button { cursor: pointer; }
 }
 
 .stat-value {
-  font: 400 34px Georgia, serif;
+  font: 400 34px var(--font-heading);
 }
 
 .stat-note {
@@ -1122,7 +1128,7 @@ button { cursor: pointer; }
 
 .dashboard-panel h2 {
   margin: 0 0 16px;
-  font: 400 24px Georgia, serif;
+  font: 400 24px var(--font-heading);
 }
 
 .popular-list {
@@ -1172,7 +1178,7 @@ button { cursor: pointer; }
 
 .home-hero h1 {
   margin: 0;
-  font: 400 clamp(42px, 7vw, 72px) / 1.05 Georgia, serif;
+  font: 400 clamp(42px, 7vw, 72px) / 1.05 var(--font-heading);
   letter-spacing: -0.05em;
 }
 
@@ -1227,7 +1233,7 @@ button { cursor: pointer; }
 
 .home-feature h2 {
   margin: 0;
-  font: 400 22px Georgia, serif;
+  font: 400 22px var(--font-heading);
 }
 
 .home-feature p {
@@ -1255,7 +1261,7 @@ button { cursor: pointer; }
 
 .home-special h2 {
   margin: 0;
-  font: 400 28px Georgia, serif;
+  font: 400 28px var(--font-heading);
 }
 
 .home-special p {
