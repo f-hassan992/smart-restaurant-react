@@ -9,7 +9,7 @@ function navClass({ isActive }) {
 }
 
 function Navbar() {
-  const { role, logout } = useAuth();
+  const { user, role, logout } = useAuth();
   const { totalItems } = useCart();
 
   return (
@@ -45,18 +45,28 @@ function Navbar() {
           </NavLink>
         )}
 
-        {role ? (
-          <button
-            className="nav-action"
-            type="button"
-            onClick={logout}
-          >
-            Logout
-          </button>
+        {user ? (
+          <>
+            <NavLink to="/account" className={navClass}>
+              Account
+            </NavLink>
+            <button
+              className="nav-action"
+              type="button"
+              onClick={logout}
+            >
+              Logout
+            </button>
+          </>
         ) : (
-          <NavLink to="/login" className={navClass}>
-            Login
-          </NavLink>
+          <>
+            <NavLink to="/login" className={navClass}>
+              Login
+            </NavLink>
+            <NavLink to="/register" className={navClass}>
+              Register
+            </NavLink>
+          </>
         )}
       </nav>
     </header>

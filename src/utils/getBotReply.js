@@ -1,4 +1,5 @@
 // Finds the best answer for a question. No real AI: it counts matching keywords.
+// It also uses the customer's own orders and saved dietary preference.
 import { chatbotData, fallbackReply } from '../data/chatbotData.js';
 
 // Lowercase, remove apostrophes, and turn other punctuation into spaces.
@@ -20,7 +21,7 @@ function joinNames(names) {
   return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
 }
 
-export function getBotReply(question, orders) {
+export function getBotReply(question, myOrders, user, menuItems) {
   const text = normalize(question);
 
   let bestMatch = null;
@@ -42,10 +43,27 @@ export function getBotReply(question, orders) {
     return fallbackReply;
   }
 
-  // "Last order" uses the customer's real newest order when there is one.
-  if (bestMatch.id === 'last-order' && orders.length > 0) {
-    const names = orders[0].items.map((item) => item.name);
+  // "Last order" uses this customer's newest order when there is one.
+  if (bestMatch.id === 'last-order' && myOrders.length > 0) {
+    const names = myOrders[0].items.map((item) => item.name);
     return `Your previous order was ${joinNames(names)}.`;
+  }
+
+  // "Recommend" uses the saved dietary preference to pick available mains.
+  if (bestMatch.id === 'recommend' && user && user.dietary) {
+    const names = menuItems
+      .filter(
+        (item) =>
+          item.available &&
+          item.category === 'Mains' &&
+          item.dietary.includes(user.dietary)
+      )
+      .slice(0, 2)
+      .map((item) => item.name);
+
+    if (names.length > 0) {
+      return `Based on your ${user.dietary} preference, we recommend ${joinNames(names)}.`;
+    }
   }
 
   return bestMatch.response;

@@ -1,6 +1,7 @@
 // Table booking form with validation. Bookings are saved in ReservationsContext.
 import { useState } from 'react';
 import { useReservations } from '../../context/ReservationsContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import ReservationCard from '../../components/reservations/ReservationCard.jsx';
 
 const OPENING_TIME = '11:00';
@@ -80,9 +81,22 @@ function validate(form) {
 }
 
 function Reservations() {
+  const { user } = useAuth();
   const { reservations, addReservation } = useReservations();
 
-  const [form, setForm] = useState(emptyForm);
+  // Logged-in customers start with their saved name and phone.
+  const startingForm = {
+    ...emptyForm,
+    name: user ? user.name : '',
+    phone: user ? user.phone : '',
+  };
+
+  // Only this customer's reservations (guests see the ones made without logging in).
+  const myReservations = reservations.filter(
+    (reservation) => reservation.userId === (user ? user.id : null)
+  );
+
+  const [form, setForm] = useState(startingForm);
   const [errors, setErrors] = useState({});
   const [confirmed, setConfirmed] = useState(null);
 
@@ -104,6 +118,7 @@ function Reservations() {
     }
 
     const reservation = addReservation({
+      userId: user ? user.id : null,
       customerName: form.name.trim(),
       phone: form.phone.trim(),
       date: form.date,
@@ -114,7 +129,7 @@ function Reservations() {
     });
 
     setConfirmed(reservation);
-    setForm(emptyForm);
+    setForm(startingForm);
     setErrors({});
   };
 
@@ -285,12 +300,12 @@ function Reservations() {
         </button>
       </form>
 
-      {reservations.length > 0 && (
+      {myReservations.length > 0 && (
         <div className="reservations-history">
           <h2>Your reservations</h2>
 
           <div className="orders-list">
-            {reservations.map((reservation) => (
+            {myReservations.map((reservation) => (
               <ReservationCard
                 key={reservation.id}
                 reservation={reservation}

@@ -1,15 +1,30 @@
 // The chat: message list, suggested questions, and the input form.
 import { useEffect, useRef, useState } from 'react';
+import { useAuth } from '../../context/AuthContext.jsx';
+import { useMenu } from '../../context/MenuContext.jsx';
 import { useOrders } from '../../context/OrdersContext.jsx';
 import { greeting, suggestedQuestions } from '../../data/chatbotData.js';
 import { getBotReply } from '../../utils/getBotReply.js';
 import ChatMessage from './ChatMessage.jsx';
 
 function ChatWindow() {
+  const { user } = useAuth();
+  const { menuItems } = useMenu();
   const { orders } = useOrders();
 
+  // Only this customer's orders (guests have userId null).
+  const myOrders = orders.filter(
+    (order) => order.userId === (user ? user.id : null)
+  );
+
+  // Logged-in customers get a greeting with their first name.
+  const firstName = user ? user.name.split(' ')[0] : '';
+  const startMessage = user
+    ? greeting.replace('Hi!', `Hi ${firstName}!`)
+    : greeting;
+
   const [messages, setMessages] = useState([
-    { id: 1, sender: 'bot', text: greeting },
+    { id: 1, sender: 'bot', text: startMessage },
   ]);
   const [input, setInput] = useState('');
   const messageListRef = useRef(null);
@@ -31,7 +46,7 @@ function ChatWindow() {
       return;
     }
 
-    const reply = getBotReply(question, orders);
+    const reply = getBotReply(question, myOrders, user, menuItems);
 
     setMessages((currentMessages) => [
       ...currentMessages,

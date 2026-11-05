@@ -11,6 +11,8 @@ import Checkout from './pages/customer/Checkout.jsx';
 import Reservations from './pages/customer/Reservations.jsx';
 import Chat from './pages/customer/Chat.jsx';
 import Login from './pages/customer/Login.jsx';
+import Register from './pages/customer/Register.jsx';
+import Account from './pages/customer/Account.jsx';
 import OrderHistory from './pages/customer/OrderHistory.jsx';
 
 import Dashboard from './pages/admin/Dashboard.jsx';
@@ -29,6 +31,8 @@ function App() {
         <Route path="/reservations" element={<Reservations />} />
         <Route path="/chat" element={<Chat />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/account" element={<Account />} />
         <Route path="/orders" element={<OrderHistory />} />
       </Route>
 

@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext.jsx';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { useOrders } from '../../context/OrdersContext.jsx';
 import OrderCard from '../../components/orders/OrderCard.jsx';
 
@@ -34,10 +35,17 @@ function validate(form) {
 }
 
 function Checkout() {
+  const { user } = useAuth();
   const { cartItems, totalPrice, clearCart } = useCart();
   const { placeOrder } = useOrders();
 
-  const [form, setForm] = useState(emptyForm);
+  // Logged-in customers start with their saved name and phone.
+  const [form, setForm] = useState({
+    ...emptyForm,
+    name: user ? user.name : '',
+    phone: user ? user.phone : '',
+  });
+  
   const [errors, setErrors] = useState({});
   const [confirmedOrder, setConfirmedOrder] = useState(null);
 
